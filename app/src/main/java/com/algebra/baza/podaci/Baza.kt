@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 const val DATABASE             = "Studenti.db"
 const val VERSION              = 1
 const val TABLE_STUDENT        = "student"
-const val COLUMN_ID            = "_ID"
+const val COLUMN_ID            = "_id"
 const val COLUMN_IME           = "ime"
 const val COLUMN_DATUM_RODENJA = "rodendan"
 const val COLUMN_GODINA        = "godina"

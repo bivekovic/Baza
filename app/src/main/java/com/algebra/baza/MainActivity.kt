@@ -1,8 +1,11 @@
 package com.algebra.baza
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +26,9 @@ class MainActivity : AppCompatActivity( ) {
     lateinit var etIme   : EditText
     lateinit var etDatum : EditText
     lateinit var sGodina : Spinner
+    lateinit var rgSpol  : RadioGroup
+    lateinit var rbM     : RadioButton
+    lateinit var rbZ     : RadioButton
     private lateinit var rvLista : RecyclerView
 
     private lateinit var dao     : DAO
@@ -41,11 +47,29 @@ class MainActivity : AppCompatActivity( ) {
 
     }
 
+    override fun onCreateOptionsMenu( menu: Menu? ): Boolean {
+        menuInflater.inflate( R.menu.main, menu )
+        return super.onCreateOptionsMenu( menu )
+    }
+
+    override fun onOptionsItemSelected( item: MenuItem ): Boolean {
+        if( item.itemId==R.id.bPromijeniActivity ) {
+            val providerActivity = Intent( this, ProviderActivity::class.java )
+            startActivity( providerActivity )
+            return true
+        }
+        return super.onOptionsItemSelected( item )
+    }
+
     fun initWidgets( ) {
         tvId    = findViewById( R.id.tvId )
         etIme   = findViewById( R.id.etIme )
         etDatum = findViewById( R.id.etDatum )
         sGodina = findViewById( R.id.sGodina )
+        rgSpol  = findViewById( R.id.rgSpol )
+        rbM     = findViewById( R.id.rbM )
+        rbZ     = findViewById( R.id.rbZ )
+
         rvLista = findViewById( R.id.rvListaStudenata )
 
         adapter = StudentAdapter( this, dao.getAll( ) )
@@ -62,13 +86,13 @@ class MainActivity : AppCompatActivity( ) {
         DatePickerDialog(
             this,
             {
-                dp, g, m, d ->
-                    val mm = m+1      // Mjeseci su numerirani od 0 do 11 (ne od 1 do 12)
-                    etDatum.setText(
-                        ( if( d<10 ) "0$d" else "$d" ) + "." +
-                        ( if( mm<10 ) "0$mm" else "$mm" ) + "." +
-                        "$g."
-                    )
+                    dp, g, m, d ->
+                val mm = m+1      // Mjeseci su numerirani od 0 do 11 (ne od 1 do 12)
+                etDatum.setText(
+                    ( if( d<10 ) "0$d" else "$d" ) + "." +
+                            ( if( mm<10 ) "0$mm" else "$mm" ) + "." +
+                            "$g."
+                )
             },
             dan.get( Calendar.YEAR ),
             dan.get( Calendar.MONTH ),
@@ -110,8 +134,11 @@ class MainActivity : AppCompatActivity( ) {
         val ime = etIme.text.toString( )
         val rodendan = sdfInt.format( sdfCitanje.parse( etDatum.text.toString( ) ) ).toInt( )
         val godina = sGodina.selectedItemPosition+1
+        val spol   = if( rbM.isChecked ) "M"
+        else if( rbZ.isChecked ) "Ž"
+        else ""
 
-        return Student( id, ime, rodendan, godina )
+        return Student( id, ime, rodendan, godina, spol )
     }
 
     fun ocistiFormu( ) {
@@ -119,6 +146,6 @@ class MainActivity : AppCompatActivity( ) {
         etIme.setText( "" )
         etDatum.setText( "" )
         sGodina.setSelection( 0 )
+        rgSpol.clearCheck( )
     }
-
 }

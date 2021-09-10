@@ -18,8 +18,9 @@ class BazaDAO( val context : Context ) : DAO {
         values.put( COLUMN_IME,           s.ime )
         values.put( COLUMN_DATUM_RODENJA, s.datum )
         values.put( COLUMN_GODINA,        s.godina )
+        values.put( COLUMN_SPOL,          s.spol )
         try {
-            db.insert( TABLE_STUDENT, null, values )
+            db.insert( TABLE_STUDENT, null, values)
         } catch ( e : Exception ) {
             Log.e( TAG, "Desila se iznimka prilikom unosa novog studenta" )
             return false
@@ -28,13 +29,14 @@ class BazaDAO( val context : Context ) : DAO {
         return true
     }
 
-    override fun update(s: Student): Boolean {
+    override fun update( s: Student ): Boolean {
         val db = Baza.getInstance( context ).writableDatabase
 
         val values = ContentValues( )
         values.put( COLUMN_IME,           s.ime )
         values.put( COLUMN_DATUM_RODENJA, s.datum )
         values.put( COLUMN_GODINA,        s.godina )
+        values.put( COLUMN_SPOL,          s.spol )
 
         val selection = COLUMN_ID +"=?"
         val selectionArgs = arrayOf( ""+ s.id )
@@ -65,8 +67,9 @@ class BazaDAO( val context : Context ) : DAO {
                 val ime =      cursor.getString( cursor.getColumnIndex( COLUMN_IME ) )
                 val rodendan = cursor.getInt( cursor.getColumnIndex( COLUMN_DATUM_RODENJA ) )
                 val godina =   cursor.getInt( cursor.getColumnIndex( COLUMN_GODINA ) )
+                val spol =     cursor.getString( cursor.getColumnIndex( COLUMN_SPOL ) )
 
-                studenti.add( Student( id, ime, rodendan, godina ) )
+                studenti.add( Student( id, ime, rodendan, godina, spol ) )
 
                 cursor.moveToNext( )
             }

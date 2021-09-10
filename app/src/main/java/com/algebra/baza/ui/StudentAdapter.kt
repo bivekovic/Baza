@@ -48,6 +48,7 @@ class StudentHolder(inflater: LayoutInflater, parent : ViewGroup?, val context :
     private var tvIme             : TextView
     private var tvRodendan        : TextView
     private var tvGodina          : TextView
+    private var tvSpol            : TextView
     private lateinit var student  : Student
 
     init {
@@ -55,6 +56,7 @@ class StudentHolder(inflater: LayoutInflater, parent : ViewGroup?, val context :
         tvIme      = itemView.findViewById( R.id.tvIme )
         tvRodendan = itemView.findViewById( R.id.tvRodendan )
         tvGodina   = itemView.findViewById( R.id.tvGodina )
+        tvSpol     = itemView.findViewById( R.id.tvSpol )
         itemView.setOnClickListener( this )
     }
 
@@ -65,6 +67,7 @@ class StudentHolder(inflater: LayoutInflater, parent : ViewGroup?, val context :
         tvIme.text      = student.ime
         tvRodendan.text = student.datumString( )
         tvGodina.text   = "${student.godina}"
+        tvSpol.text     = student.spol
     }
 
     override fun onClick( v: View? ) {
@@ -73,5 +76,8 @@ class StudentHolder(inflater: LayoutInflater, parent : ViewGroup?, val context :
         act.etIme.setText( student.ime.toString( ) )
         act.etDatum.setText( student.datumString( ) )
         act.sGodina.setSelection( student.godina-1 )
+        act.rgSpol.clearCheck( )
+        if( student.spol=="Ž" ) act.rgSpol.check( R.id.rbZ )
+        else if( student.spol=="M" ) act.rgSpol.check( R.id.rbM )
     }
 }

@@ -5,23 +5,25 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 const val DATABASE             = "Studenti.db"
-const val VERSION              = 1
+const val VERSION              = 3
 const val TABLE_STUDENT        = "student"
 const val COLUMN_ID            = "_id"
 const val COLUMN_IME           = "ime"
 const val COLUMN_DATUM_RODENJA = "rodendan"
 const val COLUMN_GODINA        = "godina"
+const val COLUMN_SPOL          = "spol"
 
 
 class Baza private constructor( context : Context ) : SQLiteOpenHelper( context, DATABASE, null, VERSION ) {
     override fun onCreate( db: SQLiteDatabase? ) {
         val create_sql = "CREATE TABLE \""+ TABLE_STUDENT +"\" (" +
-	                        "\"" + COLUMN_ID + "\"	INTEGER,"+
-                            "\"" + COLUMN_IME + "\"	TEXT,"+
-                            "\"" + COLUMN_DATUM_RODENJA + "\"	INTEGER,"+
-                            "\""+ COLUMN_GODINA +"\"	INTEGER,"+
-                            "PRIMARY KEY(\""+ COLUMN_ID +"\")"+
-                        ");"
+                "\"" + COLUMN_ID            + "\"	INTEGER,"+
+                "\"" + COLUMN_IME           + "\"	TEXT,"+
+                "\"" + COLUMN_DATUM_RODENJA + "\"	INTEGER,"+
+                "\"" + COLUMN_GODINA        + "\"	INTEGER,"+
+                "\"" + COLUMN_SPOL          + "\"	TEXT,"+
+                " PRIMARY KEY(\""+ COLUMN_ID +"\")"+
+                ");"
         db?.execSQL( create_sql )
     }
 

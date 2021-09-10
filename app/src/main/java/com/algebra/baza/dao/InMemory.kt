@@ -10,10 +10,10 @@ class InMemory : DAO {
     private val lista = mutableListOf< Student >( )
 
     init {
-        lista.add( Student( 1, "Pero",   20001211, 3 ) )
-        lista.add( Student( 2, "Mate",   19990112, 4 ) )
-        lista.add( Student( 3, "Ana",    20010803, 1 ) )
-        lista.add( Student( 4, "Marija", 19970622, 5 ) )
+        lista.add( Student( 1, "Pero",   20001211, 3, "M" ) )
+        lista.add( Student( 2, "Mate",   19990112, 4, "M" ) )
+        lista.add( Student( 3, "Ana",    20010803, 1, "Ž" ) )
+        lista.add( Student( 4, "Marija", 19970622, 5, "Ž" ) )
     }
 
     override fun insert( s : Student ): Boolean {
@@ -34,6 +34,7 @@ class InMemory : DAO {
                 student.ime    = s.ime
                 student.datum  = s.datum
                 student.godina = s.godina
+                student.spol   = s.spol
                 return true
             }
         }
